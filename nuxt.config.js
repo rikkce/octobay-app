@@ -28,7 +28,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: 'Octobay App',
+    title: 'OpenQ',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -49,8 +49,16 @@ export default {
       },
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/logo.png' },
-      { rel: 'shortcut icon', type: 'image/png', href: '/logo.png' },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: (process.env.NUXT_ROUTER_BASE_DIR || '/') + 'icon.png',
+      },
+      {
+        rel: 'shortcut icon',
+        type: 'image/png',
+        href: (process.env.NUXT_ROUTER_BASE_DIR || '/') + 'icon.png',
+      },
     ],
   },
   loading: {
@@ -72,6 +80,7 @@ export default {
     '@/plugins/clipboard',
     '@/plugins/web3',
     '@/plugins/octicons',
+    '@/plugins/api',
   ],
   /*
    ** Auto import components
@@ -98,7 +107,7 @@ export default {
     extend(config) {
       config.node = {
         fs: 'empty',
-      }
+      };
     },
   },
 
@@ -160,8 +169,9 @@ export default {
         'faFire',
         'faWallet',
         'faShare',
+        'faPlay',
       ],
       brands: ['faEthereum', 'faTwitter', 'faGithub', 'faDiscord'],
     },
   },
-}
+};
