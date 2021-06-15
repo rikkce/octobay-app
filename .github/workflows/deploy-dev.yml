@@ -1,12 +1,12 @@
 name: Development Build and Deploy
 on:
   push:
-    branches: [ development ]
+    branches: [development]
     paths-ignore:
-      - '.github/workflows/**'
-      - '**.md'
+      - ".github/workflows/**"
+      - "**.md"
 env:
-  URL: dev.octobay.org
+  URL: www.openq.dev
 
 jobs:
   build:
@@ -17,18 +17,18 @@ jobs:
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v2
-      
+
       # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
       - name: Set GitHub Actions as Commit Author
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          
+
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          path: 'build'
-      
+          path: "build"
+
       - name: Build
         run: |
           cd build
@@ -39,14 +39,14 @@ jobs:
           export CHAIN_ID=42
           yarn app:generate
           cd ..
-      
+
       - name: Checkout Dev Target
         uses: actions/checkout@v2
         with:
           repository: octobay/app-dev
-          path: 'deploy'
+          path: "deploy"
           token: ${{ secrets.PAT }}
-      
+
       - name: Push files to target
         run: |
           cp -r build/dist/* deploy

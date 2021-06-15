@@ -2,7 +2,7 @@
   <div class="card-body" style="max-width: 360px">
     <div>
       <b class="d-flex justify-content-between">
-        Octobay
+        OpenQ
         <a
           :href="
             'https://kovan.etherscan.io/address/' + octobay.options.address

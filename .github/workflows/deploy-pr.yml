@@ -1,10 +1,10 @@
 name: Pull Request Build and Deploy
 on:
   pull_request:
-    branches: [ development ]
+    branches: [development]
     paths-ignore:
-      - '.github/workflows/**'
-      - '**.md'
+      - ".github/workflows/**"
+      - "**.md"
 
 env:
   PR_REPO_NAME: app-pr-${{ github.event.pull_request.node_id }}
@@ -17,30 +17,30 @@ jobs:
         uses: octobay/create-repository-action@v1
         with:
           name: ${{ env.PR_REPO_NAME }}
-          org: octobay
+          org: openq
           access-token: ${{ secrets.PAT }}
-    
+
   pr-build-deploy:
     needs: create-page-host
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: pr-staging
-      url: https://octobay.github.io/${{ env.PR_REPO_NAME }}/
+      url: https://openqdev.github.io/${{ env.PR_REPO_NAME }}/
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v2
-      
+
       # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
       - name: Set GitHub Actions as Commit Author
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          
+
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          path: 'pr-build'
-      
+          path: "pr-build"
+
       - name: Build Pull Request
         run: |
           cd pr-build
@@ -52,14 +52,14 @@ jobs:
           export CHAIN_ID=42
           yarn app:generate
           cd ..
-      
+
       - name: Checkout temporary deployment target repo
         uses: actions/checkout@v2
         with:
           repository: octobay/${{ env.PR_REPO_NAME }}
-          path: 'pr-deploy'
+          path: "pr-deploy"
           token: ${{ secrets.PAT }}
-      
+
       - name: Push files to target
         run: |
           cp -r pr-build/dist/* pr-deploy
