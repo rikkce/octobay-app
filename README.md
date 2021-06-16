@@ -36,7 +36,7 @@ Some API calls are the same for the frontend API and our [chainlink adapters](ht
 
 ## Design
 
-The general design guideline is:
+The general design guideline is;
 
 > *"Everything you need. Nothing you don't."*
 
